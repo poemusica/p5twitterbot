@@ -1,0 +1,28 @@
+{
+  "name": "p5twitterbot",
+  "version": "1.0.0",
+  "description": "Daniel Shiffman's twitter bot tutorial.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poemusica/p5twitterbot.git"
+  },
+  "keywords": [
+    "twitter",
+    "bot",
+    "p5"
+  ],
+  "author": "Heather Mahan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/poemusica/p5twitterbot/issues"
+  },
+  "homepage": "https://github.com/poemusica/p5twitterbot#readme",
+  "dependencies": {
+    "twit": "^2.2.2"
+  }
+}
