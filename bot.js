@@ -1,14 +1,46 @@
-// Twit documentation: https://github.com/ttezel/twit
-console.log('Bot is starting.');
+// ==== REQUIRED MODULES ====
+var child_process = require("child_process"),
+	Twit = require('twit'),
+	fs = require('fs'),
+	config = require('./config');
 
-var Twit = require('twit'),
-	config = require('./config'),
-	T = new Twit(config);
+// ==== TWITTER API STUFF ====
+var	T = new Twit(config);
 
+postImage();
 // postTweet();
 // Tweet every hour.
 // setInterval(postTweet, 1000*60*60);
 // replyOnFollow();
+
+
+function postImage() {
+	var img_filename = 'phantom-capture.png',
+    	cmd = 'phantomjs --local-to-remote-url-access=true ./phantom-script.js ' + img_filename;
+	child_process.exec(cmd, postCanvas);
+	function postCanvas() {
+		var b64content = fs.readFileSync(img_filename, {encoding: 'base64'} );
+		T.post('media/upload', {media_data: b64content}, uploaded);
+	}
+	function uploaded(err, data, response) {
+		if (err) { console.log('Something went wrong with the upload.'); }
+		else {
+			var id = data.media_id_string,
+				tweet = {
+					status: '#p5js drawing powered by #phantomjs posted by #nodejs',
+					media_ids: [id],
+				};
+			T.post('statuses/update', tweet, tweeted);
+		}
+	}
+	function tweeted(err, data, response) {
+		if (err) { 
+			console.log('Something went wrong.'); 
+		} else { 
+			console.log('It worked! Posted image to Twitter.'); 
+		}
+	}
+}
 
 function replyOnFollow() {
 	var stream = T.stream('user');

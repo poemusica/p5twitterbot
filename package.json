@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/poemusica/p5twitterbot#readme",
   "dependencies": {
+    "phantomjs-prebuilt": "^2.1.4",
     "twit": "^2.2.2"
   }
 }
